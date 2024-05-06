@@ -3,10 +3,11 @@
 		[
 			"module-resolver",
 			{
-				"alias": {
-					"~": "./src"
-				}
-			}
+        "root": ["./src"],
+        "alias": {
+          "~": "./src"
+        }
+      }
 		]
 	]
 }
