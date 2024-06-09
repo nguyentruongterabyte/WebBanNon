@@ -1,0 +1,40 @@
+.order-history {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.order-details {
+  flex-basis: 50%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  text-align: start;
+}
+
+.items {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item + .item {
+  border-top: 1px solid #ccc;
+}
+
+.item img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-details p {
+  margin: 0;
+}

@@ -1,14 +1,16 @@
-import Login from "./pages/Login";
-import { BrowserRouter as Router } from 'react-router-dom';
-import ProductManager from "./pages/ProductManager";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CustomerManager from './pages/CustomerManager';
+import OrderHistory from './pages/OrderHistory';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      
-      <ProductManager/>
+      <Routes>
+        <Route path="/" element={<CustomerManager />} />
+        <Route path="/order/history/:customerId" element={<OrderHistory />} />
+      </Routes>
     </Router>
   );
-}
+};
 
 export default App;

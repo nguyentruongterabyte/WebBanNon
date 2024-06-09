@@ -17,7 +17,11 @@ export const api = {
     resetPasswordRequest: 'api/user/reset-password-request',
     refreshToken: 'api/user/refresh-token',
     getAll: 'api/user/get-all'
-  }
+  },
+
+  order: {
+    history: '/api/order/history',
+  },
 }
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
