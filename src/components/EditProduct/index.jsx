@@ -78,10 +78,10 @@ const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
       hinhAnh: hinhAnhURL,
     };
 
-    const data = await productApiCalls.update(formData);
+    const response = await productApiCalls.update(formData);
 
-    if (data.status == 200) {
-      console.log(data.message);
+    if (response.status == 200) {
+      console.log(response.message);
     }
 
   };

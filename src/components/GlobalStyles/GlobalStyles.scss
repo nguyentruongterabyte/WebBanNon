@@ -1,0 +1,56 @@
+@import 'normalize.css';
+
+:root {
+  // primary variants
+  --primary: #1a73e8;
+  --black: #000;
+  --white: #fff;
+  --text-color: #161823;
+  --blur-text-color: #7b809a;
+  --border-color: #dbdbdb;
+
+  //font-family
+  --font-family: 'TikTokFont', sans-serif;
+  
+}
+// Reset css
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// box-sizing
+.ml-0 {
+  margin-left: 0 !important;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  overflow-y: overlay;
+  font-family: var(--font-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  color: var(--text-color);
+
+}
+
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(22, 24, 35, .06);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}

@@ -1,13 +1,13 @@
+import Login from "./pages/Login";
+import { BrowserRouter as Router } from 'react-router-dom';
+import ProductManager from "./pages/ProductManager";
 
-import NavbarCustomer from './components/Navbar/NavbarCustomer';
-import ProductManager from './pages/ProductManager';
 function App() {
-  
   return (
-    <>
-      <NavbarCustomer />
-      <ProductManager />
-    </>
+    <Router>
+      
+      <ProductManager/>
+    </Router>
   );
 }
 
