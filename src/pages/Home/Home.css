@@ -1,0 +1,38 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Canh giữa các cột */
+  padding: 0 100px; /* Tạo khoảng cách 100px giữa các cột */
+}
+
+.footer-content img {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.about-us {
+  flex: 1; /* Cột co giãn để lấp đầy không gian còn lại */
+}
+
+.follow-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.follow-us img {
+  height: 90px;
+  width: 170px;
+}
