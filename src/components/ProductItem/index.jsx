@@ -1,28 +1,99 @@
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import productApiCalls from '~/networking/productApiCalls';
+import { toast } from 'react-toastify';
 import './ProductItem.css';
 
-export const ProductItem = ({data, onClickButtonEdit}) => {
-   return (
-     <Card className="product-item__container">
-       <Card.Img className="product-item__img" variant="top" src={data.hinhAnh}/>
-       <Card.Body>
-         <Card.Title className='product-item__name'>{data.tenSanPham}</Card.Title>
-         <Card.Text>
-           - Màu sắc: {data.mauSac}
-           <br />- Giới tính: { data.gioiTinh }
-           <br />- Giá: {data.giaSanPham}
-         </Card.Text>
-         <Button variant="primary" onClick={onClickButtonEdit}>Chỉnh sửa</Button>
-       </Card.Body>
-     </Card>
-   );
-}
+export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/product/${data.maSanPham}`);
+  };
+
+  const handleEditClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onClickButtonEdit();
+  }
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isConfirm = confirm('Bạn có muốn xóa sản phẩm này?');
+    if (isConfirm) {
+      handleConfirmDelete();
+    }
+  };
+
+  const handleConfirmDelete = async() => {
+    const data2 = await productApiCalls.delete(data.maSanPham);
+    if (data2.status === 200){
+      toast.success(data2.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+
+        });
+        window.location.reload();
+    } else {
+      toast.error(`${data2.status} ${data2.message}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
+  };
+
+  
+
+  return (
+    <Card className="product-item__container" onClick={handleClick}>
+      <Card.Img className="product-item__img" variant="top" src={data.hinhAnh} />
+      <Card.Body>
+        <Card.Title className="product-item__name">{data.tenSanPham}</Card.Title>
+        <Card.Text>
+          - Màu sắc: {data.mauSac}
+          <br />- Giới tính: {data.gioiTinh}
+          <br />- Giá: {data.giaSanPham}
+        </Card.Text>
+
+        {!isUser && (
+          <>
+            <Button variant="primary" onClick={handleEditClick}>
+              Chỉnh sửa
+            </Button>
+            <Button variant="danger" onClick={handleDeleteClick}>
+              Xóa
+            </Button>
+          </>
+        )}
+
+
+      </Card.Body>
+    </Card>
+  );
+};
 
 ProductItem.propTypes = {
   data: PropTypes.object.isRequired,
-  onClickButtonEdit: PropTypes.func
-}
+  onClickButtonEdit: PropTypes.func,
+  onClickButtonDelete: PropTypes.func,
+  isUser: PropTypes.bool,
+};
 
 export default ProductItem;

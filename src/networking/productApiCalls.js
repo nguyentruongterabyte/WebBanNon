@@ -52,6 +52,45 @@ const productApiCalls = {
     }
   },
 
+  //xóa sản phẩm
+  async delete(maSanPham) {
+    try {
+      // Tạo dữ liệu x-www-form-urlencoded
+      const urlEncodedData = new URLSearchParams();
+      urlEncodedData.append('maSanPham', maSanPham);
+
+      // Gửi yêu cầu DELETE với dữ liệu đã mã hóa
+      const response = await axios.delete(api.product.delete, {
+        data: urlEncodedData,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      return response?.data;
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
+  },
+
+  //them
+  async create(formData) {
+    try {
+      const urlEncodedData = Object.keys(formData)
+        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]))
+        .join('&');
+      // console.log(urlEncodedData);
+
+      const response = await axios.post(api.product.create, urlEncodedData, {
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
+  },
   // upload ảnh
   async uploadImage(selectedFile, maSanPham) {
     const formData = new FormData();
@@ -70,5 +109,7 @@ const productApiCalls = {
     }
   },
 };
+
+  
 
 export default productApiCalls;

@@ -1,0 +1,5 @@
+.product-item__img {
+  width: 50%; 
+  height: 100px; /* Thay đổi chiều cao này thành giá trị mong muốn */
+  object-fit: cover;
+}

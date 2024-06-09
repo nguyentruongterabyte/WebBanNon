@@ -7,9 +7,10 @@ import Image from 'react-bootstrap/Image';
 import images from '../../assets/images';
 import { Row, Col } from 'react-bootstrap';
 import './EditProduct.css';
+import { toast } from 'react-toastify';
 
 // eslint-disable-next-line react/display-name
-const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
+const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false}, ref) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
 
   const { tenSanPham, giaSanPham, soLuong, gioiTinh, mauSac, hinhAnh } = state;
@@ -19,7 +20,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (maSanPham != -1) {
+    if (maSanPham != -1 && !isCreate) {
       const fetchData = async () => {
         const data = await productApiCalls.get(maSanPham);
         if (data.status == 200) {
@@ -29,7 +30,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
 
       fetchData();
     }
-  }, [maSanPham]);
+  }, [maSanPham, isCreate]);
 
   useEffect(() => {
     if (product) {
@@ -77,11 +78,23 @@ const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
       mauSac: mauSac,
       hinhAnh: hinhAnhURL,
     };
+    if (isCreate) {
+      const response = await productApiCalls.create(formData);
 
-    const response = await productApiCalls.update(formData);
-
-    if (response.status == 200) {
-      console.log(response.message);
+      if (response.status == 200) {
+        toast.success(response.message);
+        window.location.reload();
+      } else {
+        toast.error(response.message);
+      }
+    } else {
+      const response = await productApiCalls.update(formData);
+      if (response.status == 200) {
+        toast.success(response.message);
+        window.location.reload();
+      } else {
+        toast.error(response.message);
+      }
     }
 
   };
@@ -171,7 +184,8 @@ const EditProduct = forwardRef(({ maSanPham = '-1' }, ref) => {
 });
 
 EditProduct.propTypes = {
-  maSanPham: PropTypes.string.isRequired,
+  maSanPham: PropTypes.number,
+  isCreate: PropTypes.bool
 };
 
 export default EditProduct;

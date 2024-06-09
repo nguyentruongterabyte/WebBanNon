@@ -19,7 +19,7 @@ const userApiCalls = {
       return { status: 500, message: error.message };
     }
   },
-
+  //lấy danh sách customer
   async getAll() {
     try {
       const response = await axios.get(api.user.getAll);
