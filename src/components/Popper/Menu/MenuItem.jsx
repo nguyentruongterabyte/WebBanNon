@@ -23,7 +23,7 @@ MenuItem.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
     to: PropTypes.string,
-    icon: PropTypes.element,
+    icon: PropTypes.object,
     separate: PropTypes.bool,
   }).isRequired,
   onClick: PropTypes.func.isRequired,

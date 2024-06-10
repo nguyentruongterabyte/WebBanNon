@@ -9,7 +9,7 @@ function useRefreshToken() {
 
   const refresh = async () => {
     const urlEncodedData = 'refreshToken=' + encodeURIComponent(refreshToken);
-    console.log(urlEncodedData);
+    // console.log(urlEncodedData);
     const response = await axios.post(api.user.refreshToken, urlEncodedData, {
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
