@@ -59,6 +59,26 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
     }
   };
 
+  // add cart
+  const handleAddToCart = () => {
+    // Logic to add the product to the cart
+    // For example, you can store the product in local storage or update the state in a global context
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(data);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    toast.success('Sản phẩm đã được thêm vào giỏ hàng', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+
   
 
   return (
@@ -82,6 +102,10 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
             </Button>
           </>
         )}
+
+        <Button variant="success" onClick={handleAddToCart}>
+          Thêm vào giỏ hàng
+        </Button>
 
 
       </Card.Body>
