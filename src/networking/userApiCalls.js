@@ -27,9 +27,23 @@ const userApiCalls = {
     } catch (error) {
       return { status: 500, message: error.message };
     }
-  }
+  },
 
+  // Đăng ký
+  async register(formData) {
+    try {
+      const urlEncodedData = Object.keys(formData)
+        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]))
+        .join('&');
+      const response = await axios.post(api.user.register, urlEncodedData, {
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      return response?.data;
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
+  },
 };
 export default userApiCalls;
-
-

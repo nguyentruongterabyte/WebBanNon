@@ -44,13 +44,13 @@ export const SIDEBAR_ADMIN_MENU = [
   {
     path: routes.customer,
     name: 'Khách hàng',
-    icon: icons.faUser
+    icon: icons.faUser,
   },
   {
     path: routes.productManager,
     name: 'Sản phẩm',
-    icon: icons.faHatCowboy
-  }
+    icon: icons.faHatCowboy,
+  },
 ];
 
 export const SIDEBAR_USER_MENU = [
@@ -104,3 +104,7 @@ export const ACCOUNT_MENU_ITEMS = [
     separate: true,
   },
 ];
+
+// Regex pattern
+export const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+export const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
