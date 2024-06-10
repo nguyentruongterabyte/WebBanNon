@@ -7,13 +7,15 @@ import hooks from '~/hooks';
 import Button from '~/components/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import userApiCalls from '~/networking/userApiCalls';
+import { toast } from 'react-toastify';
+import { jwtDecode } from 'jwt-decode';
 
 const cx = classNames.bind(styles);
 const Login = () => {
   const { setAuth } = hooks.useAuth();
   const ROLES = config.constants.ROLES;
 
-  
+  const navigate = useNavigate();
 
   const errRef = useRef();
   const userRef = useRef();
@@ -23,6 +25,8 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState('');
   const [check, toggleCheck] = hooks.useToggle('persist', false);
 
+  const navigateAfterLogin = (from, navigate) => navigate(from, { replace: true });
+
   useEffect(() => {
     userRef.current?.focus();
   }, []);
@@ -31,15 +35,42 @@ const Login = () => {
     setErrMsg('');
   }, [user, pwd]);
 
-  const handleSubmit = async( e ) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
       email: user,
-      password: pwd
+      password: pwd,
+    };
+    const data = await userApiCalls.login(formData);
+    if (data?.status !== 200) {
+      toast.error(data.message);
     }
-    const response = await userApiCalls.login( formData );
-  
-  }
+
+    const accessToken = data?.result?.accessToken;
+    const refreshToken = data?.result?.refreshToken;
+
+    setAuth({ accessToken, refreshToken });
+
+    const role = accessToken ? jwtDecode(accessToken).role : undefined;
+
+    if (check) {
+      localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+    } else {
+      localStorage.removeItem('refreshToken');
+    }
+
+    resetUser('');
+    setPwd('');
+
+    switch (Number(role)) {
+      case ROLES.admin:
+        navigateAfterLogin(config.routes.productManager, navigate);
+        break;
+      case ROLES.user:
+        navigateAfterLogin(config.routes.productList, navigate);
+        break;
+    }
+  };
 
   return (
     <section className={cx('wrapper')}>

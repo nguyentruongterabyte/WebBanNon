@@ -1,3 +1,6 @@
+import icons from '~/assets/icons';
+import routes from './routes';
+
 export const api = {
   product: {
     create: 'api/product/create',
@@ -8,7 +11,7 @@ export const api = {
     featured: 'api/product/featured',
     get: 'api/product/get',
     search: 'api/product/search',
-    quantity: 'api/product/quantity'
+    quantity: 'api/product/quantity',
   },
   user: {
     resetPassword: 'api/user/reset-password',
@@ -16,13 +19,13 @@ export const api = {
     register: 'api/user/register',
     resetPasswordRequest: 'api/user/reset-password-request',
     refreshToken: 'api/user/refresh-token',
-    getAll: 'api/user/get-all'
+    getAll: 'api/user/get-all',
   },
 
   order: {
     history: '/api/order/history',
   },
-}
+};
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 // Roles
@@ -30,3 +33,74 @@ export const ROLES = {
   admin: 1,
   user: 2,
 };
+
+// Menu sidebar
+export const SIDEBAR_ADMIN_MENU = [
+  {
+    path: routes.homeHasLogged,
+    name: 'Trang chủ',
+    icon: icons.faHome,
+  },
+  {
+    path: routes.customer,
+    name: 'Khách hàng',
+    icon: icons.faUser
+  },
+  {
+    path: routes.productManager,
+    name: 'Sản phẩm',
+    icon: icons.faHatCowboy
+  }
+];
+
+export const SIDEBAR_USER_MENU = [
+  {
+    path: routes.homeHasLogged,
+    name: 'Trang chủ',
+    icon: icons.faHome,
+  },
+];
+
+// Account menu items
+export const ACCOUNT_MENU_ITEMS = [
+  {
+    icon: icons.faEarthAsia,
+    title: 'Tiếng việt',
+    children: {
+      title: 'Ngôn ngữ',
+      data: [
+        {
+          title: 'English',
+          type: 'language',
+          code: 'en',
+          separate: true,
+        },
+        {
+          title: 'Tiếng Việt',
+          type: 'language',
+          code: 'vi',
+        },
+      ],
+    },
+  },
+  {
+    icon: icons.faKeyboard,
+    title: 'Phím tắt',
+  },
+  {
+    icon: icons.faAddressCard,
+    title: 'Hồ sơ của tôi',
+    type: 'viewProfile',
+  },
+  {
+    icon: icons.faCircleQuestion,
+    title: 'Phản hồi và trợ giúp',
+    to: '/feedback',
+  },
+  {
+    icon: icons.faRightFromBracket,
+    title: 'Đăng xuất',
+    type: 'logout',
+    separate: true,
+  },
+];
