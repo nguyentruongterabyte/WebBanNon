@@ -14,6 +14,8 @@ const NavbarCustomer = () => {
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/product">Product</Nav.Link>
             <Nav.Link href="/customer">Customer</Nav.Link>  
+            <Nav.Link href="/product-list">Product List</Nav.Link>  
+            <Nav.Link href="/cart">Giỏ hàng</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
