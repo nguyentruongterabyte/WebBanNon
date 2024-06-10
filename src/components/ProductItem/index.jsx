@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import productApiCalls from '~/networking/productApiCalls';
 import { toast } from 'react-toastify';
 import './ProductItem.css';
+import cartApiCalls from '~/networking/cartApiCalls';
+import hooks from '~/hooks';
 
 export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   const navigate = useNavigate();
+  const {user} = hooks.useJWTDecode();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -60,22 +63,27 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   };
 
   // add cart
-  const handleAddToCart = () => {
+  const handleAddToCart = async(e) => {
+    e.stopPropagation();
     // Logic to add the product to the cart
     // For example, you can store the product in local storage or update the state in a global context
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(data);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success('Sản phẩm đã được thêm vào giỏ hàng', {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    // const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // cart.push(data);
+    // localStorage.setItem('cart', JSON.stringify(cart));
+    const formData = {
+      'soLuong': 1,
+      'userId': user,
+      'maSanPham': data.maSanPham
+    }
+    const d = await cartApiCalls.createCart(formData);
+
+  
+    if (d.status === 200) {
+
+      toast.success(d.message);
+    } else {
+      toast.error(d.message)
+    }
   };
 
 
@@ -102,10 +110,13 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
           </>
         )}
 
-        <Button variant="success" onClick={handleAddToCart}>
+        {isUser && (
+          <Button variant="success" onClick={handleAddToCart}>
           Thêm vào giỏ hàng
         </Button>
+        )}
 
+        
 
       </Card.Body>
     </Card>

@@ -9,7 +9,15 @@ import RequireAuth from './components/RequireAuth';
 import Error from './components/Error';
 
 const App = () => {
+    const customerId = 24;
+
+
   return (
+    
+  
+  
+
+
     // <div>
     //   <Router>
     //     <NavbarCustomer />
@@ -36,6 +44,8 @@ const App = () => {
     //     theme="light"
     //   />
     // </div>
+
+    
 
     <div className="app">
       <Router>

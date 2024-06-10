@@ -1,0 +1,12 @@
+.cart__item-image {
+    object-fit: cover !important;
+}
+
+.cart_item-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
