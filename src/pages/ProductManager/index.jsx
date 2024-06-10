@@ -25,26 +25,25 @@ const ProductManager = () => {
   const editProductRef = useRef(null);
 
   useEffect(() => {
-    const fetchQuantiy = async() => {
+    const fetchQuantiy = async () => {
       const data = await productApiCalls.getQuantity();
       if (data.status === 200) {
         setTotalItems(data.result);
       } else {
         toast.warn(data.message, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
-
-          });
+          theme: 'light',
+        });
       }
-    }
+    };
     fetchQuantiy();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +117,7 @@ const ProductManager = () => {
       pageItems.push(
         <Pagination.Item key={number} active={number === currentPage} onClick={() => handlePageChange(number)}>
           {number}
-        </Pagination.Item>
+        </Pagination.Item>,
       );
     }
 
@@ -129,7 +128,7 @@ const ProductManager = () => {
     <>
       <Container>
         {chunk(products, 4).map((rowProducts, index) => (
-          <Row key={index}>
+          <Row className="row-chunk" key={index}>
             {rowProducts.map((product) => (
               <Col key={product.maSanPham} sm={6} md={4} lg={3}>
                 <ProductItem data={product} onClickButtonEdit={() => handleEditProduct(product.maSanPham)} />
@@ -158,9 +157,7 @@ const ProductManager = () => {
         <Modal.Header closeButton>
           <Modal.Title>Chỉnh sửa</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {showAdd ? <EditProduct ref={editProductRef} isCreate={true} /> : <></>}
-        </Modal.Body>
+        <Modal.Body>{showAdd ? <EditProduct ref={editProductRef} isCreate={true} /> : <></>}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAdd}>
             Đóng
@@ -170,7 +167,7 @@ const ProductManager = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Button size='lg' variant='warning' className='manager__btn-add' onClick={handleAddClick}>
+      <Button size="lg" variant="warning" className="manager__btn-add" onClick={handleAddClick}>
         Thêm sản phẩm
       </Button>
       <Pagination className="justify-content-center mt-3">

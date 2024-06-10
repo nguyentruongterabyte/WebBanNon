@@ -17,7 +17,7 @@ const ProductDetail = () => {
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [id]); // Add id to dependency array
 
   if (!product) {
     return <div>Loading...</div>;

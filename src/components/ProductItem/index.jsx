@@ -66,10 +66,9 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
       <Card.Img className="product-item__img" variant="top" src={data.hinhAnh} />
       <Card.Body>
         <Card.Title className="product-item__name">{data.tenSanPham}</Card.Title>
-        <Card.Text>
-          - Màu sắc: {data.mauSac}
-          <br />- Giới tính: {data.gioiTinh}
-          <br />- Giá: {data.giaSanPham}
+        <Card.Text className="product-item__describe">
+          <span>đ</span>
+          <span>{data.giaSanPham}</span>
         </Card.Text>
 
         {!isUser && (
@@ -82,8 +81,6 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
             </Button>
           </>
         )}
-
-
       </Card.Body>
     </Card>
   );
