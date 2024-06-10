@@ -23,8 +23,17 @@ export const api = {
   },
 
   order: {
-    history: '/api/order/history',
+    history: 'api/order/history',
   },
+
+  cart:{
+    create: 'api/cart/create',
+    list: 'api/cart/list',
+    deleteProduct: 'api/cart/delete-product',
+    updateProduct: 'api/cart/update-product',
+
+  },
+
 };
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -59,6 +68,16 @@ export const SIDEBAR_USER_MENU = [
     name: 'Trang chủ',
     icon: icons.faHome,
   },
+  { 
+    path: routes.cartList,
+    name: 'Giỏ hàng',
+    icon: icons.faCartArrowDown
+  },
+  {
+    path: routes.productList,
+    name: 'Sản phẩm',
+    icon: icons.faHatCowboy
+  }
 ];
 
 // Account menu items

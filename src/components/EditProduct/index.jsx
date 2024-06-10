@@ -10,7 +10,7 @@ import './EditProduct.css';
 import { toast } from 'react-toastify';
 
 // eslint-disable-next-line react/display-name
-const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false}, ref) => {
+const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
 
   const { tenSanPham, giaSanPham, soLuong, gioiTinh, mauSac, hinhAnh } = state;
@@ -54,12 +54,12 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false}, ref) => {
       setSelectedFile(file);
     }
   };
-  
+
   const saveChanges = async () => {
     // Upload hình ảnh
     let hinhAnhURL = hinhAnh;
     if (selectedFile) {
-      const data2 = await productApiCalls.uploadImage(selectedFile, maSanPham)
+      const data2 = await productApiCalls.uploadImage(selectedFile, maSanPham);
       if (data2.status == 200) {
         dispatch({ type: ACTION_TYPE.SET_HINH_ANH, payload: data2.name });
         hinhAnhURL = data2.result;
@@ -96,7 +96,6 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false}, ref) => {
         toast.error(response.message);
       }
     }
-
   };
 
   useImperativeHandle(ref, () => ({
@@ -184,8 +183,8 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false}, ref) => {
 });
 
 EditProduct.propTypes = {
-  maSanPham: PropTypes.number,
-  isCreate: PropTypes.bool
+  maSanPham: PropTypes.any,
+  isCreate: PropTypes.bool,
 };
 
 export default EditProduct;

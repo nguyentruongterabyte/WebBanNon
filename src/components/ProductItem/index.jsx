@@ -1,4 +1,3 @@
-
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
@@ -6,9 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import productApiCalls from '~/networking/productApiCalls';
 import { toast } from 'react-toastify';
 import './ProductItem.css';
+import cartApiCalls from '~/networking/cartApiCalls';
+import hooks from '~/hooks';
+import Utils from '~/utils/Utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import icons from '~/assets/icons';
 
 export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   const navigate = useNavigate();
+  const { user } = hooks.useJWTDecode();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -19,7 +24,7 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
     e.preventDefault();
     e.stopPropagation();
     onClickButtonEdit();
-  }
+  };
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
@@ -30,56 +35,53 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
     }
   };
 
-  const handleConfirmDelete = async() => {
+  const handleConfirmDelete = async () => {
     const data2 = await productApiCalls.delete(data.maSanPham);
-    if (data2.status === 200){
+    if (data2.status === 200) {
       toast.success(data2.message, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
-
-        });
-        window.location.reload();
+        theme: 'light',
+      });
+      window.location.reload();
     } else {
       toast.error(`${data2.status} ${data2.message}`, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
-        });
+        theme: 'light',
+      });
     }
   };
 
   // add cart
-  const handleAddToCart = () => {
+  const handleAddToCart = async (e) => {
+    e.stopPropagation();
     // Logic to add the product to the cart
     // For example, you can store the product in local storage or update the state in a global context
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(data);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success('Sản phẩm đã được thêm vào giỏ hàng', {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    // const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // cart.push(data);
+    // localStorage.setItem('cart', JSON.stringify(cart));
+    const formData = {
+      soLuong: 1,
+      userId: user,
+      maSanPham: data.maSanPham,
+    };
+    const d = await cartApiCalls.createCart(formData);
+
+    if (d.status === 200) {
+      toast.success(d.message);
+    }
   };
-
-
-  
 
   return (
     <Card className="product-item__container" onClick={handleClick}>
@@ -87,8 +89,7 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
       <Card.Body>
         <Card.Title className="product-item__name">{data.tenSanPham}</Card.Title>
         <Card.Text className="product-item__describe">
-          <span>đ</span>
-          <span>{data.giaSanPham}</span>
+          <span>{Utils.formatCurrency(Number(data.giaSanPham))}</span>
         </Card.Text>
 
         {!isUser && (
@@ -102,11 +103,11 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
           </>
         )}
 
-        <Button variant="success" onClick={handleAddToCart}>
-          Thêm vào giỏ hàng
-        </Button>
-
-
+        {isUser && (
+          <Button variant="success" size="lg" onClick={handleAddToCart}>
+            <FontAwesomeIcon icon={icons.faCartArrowDown} />
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );

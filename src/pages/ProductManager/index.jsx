@@ -4,14 +4,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Pagination from 'react-bootstrap/Pagination';
+import { toast } from 'react-toastify';
 
 import ProductItem from '../../components/ProductItem';
 import productApiCalls from '../../networking/productApiCalls';
 import EditProduct from '../../components/EditProduct';
 import Button from 'react-bootstrap/Button';
-
 import './ProductManager.css';
-import { toast } from 'react-toastify';
+
 
 const ProductManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -137,7 +137,7 @@ const ProductManager = () => {
           </Row>
         ))}
       </Container>
-      <Modal show={show} onHide={handleClose}>
+      <Modal centered size='lg' fullscreen show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Chỉnh sửa</Modal.Title>
         </Modal.Header>

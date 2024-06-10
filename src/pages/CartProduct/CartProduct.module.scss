@@ -1,0 +1,79 @@
+.wrapper {
+    height: 100vh;
+}
+.cart__item-image {
+    object-fit: cover !important;
+}
+
+.cart_item-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.payment-section {
+    bottom: 0;
+    position: fixed;
+    z-index: 2;
+    align-items: center;
+    background: #fff;
+    box-sizing: border-box;
+    display: grid;
+    flex: 1;
+    font-size: 1rem;
+    grid-template-columns: 1fr 20.3125rem 11.875rem;
+    margin-top: .75rem;
+    width: 100%;
+    height: 64px;
+    margin-bottom: 20px;
+
+    &::before {
+        background: linear-gradient(transparent, rgba(0, 0, 0, .06));
+        content: "";
+        height: 1.25rem;
+        left: 0;
+        position: absolute;
+        top: -1.25rem;
+        width: 100%;
+    }
+
+    .payment-section__grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .total-price {
+            padding: 0 10px;
+            span {
+                font-size: 1.6rem;
+            }
+
+            p {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .stardust-checkbox {
+        margin-left: 8px;
+        
+        .stardust-checkbox__input {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .btn-select-all {
+        background-color: transparent;
+        font-size: 1.6rem;
+        font-weight: 300;
+    }
+
+    .btn-order {
+        padding: 12px 0;
+        font-size: 1.5rem;
+    }
+}

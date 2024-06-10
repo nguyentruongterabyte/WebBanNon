@@ -81,9 +81,11 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],
+input[type="number"],
+option,
 button,
 textarea {
-  font-size: 1.8rem;
+  // font-size: 1.8rem;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }

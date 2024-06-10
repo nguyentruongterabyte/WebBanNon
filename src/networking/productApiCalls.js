@@ -39,7 +39,7 @@ const productApiCalls = {
       const urlEncodedData = Object.keys(formData)
         .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]))
         .join('&');
-      // console.log(urlEncodedData);
+      console.log(urlEncodedData);
 
       const response = await axios.put(api.product.update, urlEncodedData, {
         header: {

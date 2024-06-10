@@ -9,6 +9,7 @@ import ProductManager from '~/pages/ProductManager';
 import ProductList from '~/pages/ProductList';
 import ProductDetail from '~/pages/ProductDetail';
 import Register from '~/pages/Register';
+import CartProduct from '~/pages/CartProduct';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -43,9 +44,14 @@ const privateRoutes = [
   {
     path: routes.productDetail,
     component: ProductDetail,
-    allowedRole: [ROLES.admin, ROLES.user],
+    allowedRoles: [ROLES.admin, ROLES.user],
     layout: layouts.HasSideBarLayout,
   },
+  { path: routes.cartList,
+    component: CartProduct,
+    allowedRoles: [ROLES.user],
+    layout: layouts.HasSideBarLayout,
+  }
 ];
 
 export { publicRoutes, privateRoutes };
