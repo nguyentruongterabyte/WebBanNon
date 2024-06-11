@@ -11,6 +11,7 @@ import ProductDetail from '~/pages/ProductDetail';
 import Register from '~/pages/Register';
 import CartProduct from '~/pages/CartProduct';
 import OrderManager from '~/pages/OrderManager';
+import Chart from '~/pages/Chart';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -26,6 +27,12 @@ const privateRoutes = [
     path: routes.homeHasLogged,
     component: Home,
     allowedRoles: [ROLES.admin, ROLES.user],
+    layout: layouts.HasSideBarLayout,
+  },
+  {
+    path: routes.chart,
+    component: Chart,
+    allowedRoles: [ROLES.admin],
     layout: layouts.HasSideBarLayout,
   },
   {

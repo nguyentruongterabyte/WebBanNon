@@ -9,7 +9,8 @@ const routes = {
   productManager: '/product',
   register: '/register',
   cartList: '/cart-list',
-  orderManager: '/order-manager'
+  orderManager: '/order-manager',
+  chart: '/chart'
 };
 
 export default routes;
