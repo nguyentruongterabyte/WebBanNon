@@ -119,10 +119,10 @@ const OrderManager = () => {
                 )}
                 onChange={(e) => handleStatusChange(order.maDonHang, e.target.value)}
               >
-                <option value="Chờ xác nhận">Chờ xác nhận</option>
-                <option value="Đang giao">Đang giao</option>
-                <option value="Đã giao">Đã giao</option>
-                <option value="Đã hủy">Đã hủy</option>
+                <option className={cx('select-option-1')} value="Chờ xác nhận">Chờ xác nhận</option>
+                <option className={cx('select-option-2')} value="Đang giao">Đang giao</option>
+                <option className={cx('select-option-3')} value="Đã giao">Đã giao</option>
+                <option className={cx('select-option-4')} value="Đã hủy">Đã hủy</option>
               </select>
             </p>
             <Table striped bordered hover>
