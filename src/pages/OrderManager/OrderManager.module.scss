@@ -1,0 +1,46 @@
+.order-list {
+  list-style-type: none;
+  padding: 0;
+
+}
+
+.order-item {
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.order-item h5 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 18px;
+}
+
+.order-item p {
+  margin: 4px 0;
+  font-size: 1.5rem;
+
+}
+
+.order-item span {
+  display: block;
+  font-weight: bold;
+}
+.order__item-image {
+  margin-left: 20px;
+  object-fit: cover !important;
+}
+
+.order__item-name {
+  margin-left: 20px;
+  display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+

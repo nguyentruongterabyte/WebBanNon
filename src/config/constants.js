@@ -25,7 +25,8 @@ export const api = {
 
   order: {
     history: 'api/order/history',
-    create: 'api/order/create',
+    getAllOrder: 'api/order/history-all',
+    updateStatus: 'api/order/update-status',
   },
 
   cart: {
@@ -59,6 +60,11 @@ export const SIDEBAR_ADMIN_MENU = [
     path: routes.productManager,
     name: 'Sản phẩm',
     icon: icons.faHatCowboy,
+  },
+  {
+    path: routes.orderManager,
+    name: 'Đơn hàng',
+    icon: icons.faTruckFast,
   },
 ];
 

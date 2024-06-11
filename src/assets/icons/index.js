@@ -24,10 +24,12 @@ import {
   faCircle,
   faHatCowboy,
   faCartArrowDown,
-  faTruckFast
+  faTruckFast,
+  faChartColumn,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = {
+  faChartColumn,
   faTruckFast,
   faCartArrowDown,
   faHatCowboy,

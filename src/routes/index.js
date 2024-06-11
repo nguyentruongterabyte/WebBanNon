@@ -10,8 +10,7 @@ import ProductList from '~/pages/ProductList';
 import ProductDetail from '~/pages/ProductDetail';
 import Register from '~/pages/Register';
 import CartProduct from '~/pages/CartProduct';
-import Order from '~/pages/Order';
-import CustomerOrderList from '~/pages/CustomerOrderList';
+import OrderManager from '~/pages/OrderManager';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -30,15 +29,9 @@ const privateRoutes = [
     layout: layouts.HasSideBarLayout,
   },
   {
-    path: routes.customerOrderList,
-    component: CustomerOrderList,
-    allowedRoles: [ROLES.user],
-    layout: layouts.HasSideBarLayout,
-  },
-  {
-    path: routes.order,
-    component: Order,
-    allowedRoles: [ROLES.user],
+    path: routes.orderManager,
+    component: OrderManager,
+    allowedRoles: [ROLES.admin],
     layout: layouts.HasSideBarLayout,
   },
   { path: routes.customer, component: CustomerManager, allowedRoles: [ROLES.admin], layout: layouts.HasSideBarLayout },
