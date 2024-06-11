@@ -35,6 +35,10 @@ export const api = {
     deleteProduct: 'api/cart/delete-product',
     updateProduct: 'api/cart/update-product',
   },
+  reports: {
+    getRevenue: 'api/reports/revenue',
+    products: 'api/reports/products',
+  },
 };
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -65,6 +69,11 @@ export const SIDEBAR_ADMIN_MENU = [
     path: routes.orderManager,
     name: 'Đơn hàng',
     icon: icons.faTruckFast,
+  },
+  {
+    path: routes.chart,
+    name: 'Thống kê',
+    icon: icons.faChartColumn,
   },
 ];
 
