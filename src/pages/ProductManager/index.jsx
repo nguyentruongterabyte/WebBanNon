@@ -6,12 +6,11 @@ import Modal from 'react-bootstrap/Modal';
 import Pagination from 'react-bootstrap/Pagination';
 import { toast } from 'react-toastify';
 
-import ProductItem from '../../components/ProductItem';
-import productApiCalls from '../../networking/productApiCalls';
-import EditProduct from '../../components/EditProduct';
+import ProductItem from '~/components/ProductItem';
+import EditProduct from '~/components/EditProduct';
 import Button from 'react-bootstrap/Button';
 import './ProductManager.css';
-
+import hooks from '~/hooks';
 
 const ProductManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,12 +20,12 @@ const ProductManager = () => {
   const [show, setShow] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [maSanPham, setMaSanPham] = useState(undefined);
-
+  const { getQuantity, getPage } = hooks.useProductApiCalls();
   const editProductRef = useRef(null);
 
   useEffect(() => {
     const fetchQuantiy = async () => {
-      const data = await productApiCalls.getQuantity();
+      const data = await getQuantity();
       if (data.status === 200) {
         setTotalItems(data.result);
       } else {
@@ -43,18 +42,18 @@ const ProductManager = () => {
       }
     };
     fetchQuantiy();
-  }, []);
+  }, [getQuantity]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await productApiCalls.getPage(currentPage, itemsPerPage);
+      const data = await getPage(currentPage, itemsPerPage);
       if (data.status === 200) {
         setProducts(data.result);
       }
     };
 
     fetchData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, getPage]);
 
   const chunk = (arr, size) => {
     if (!arr || arr.length === 0) {
@@ -137,7 +136,7 @@ const ProductManager = () => {
           </Row>
         ))}
       </Container>
-      <Modal centered size='lg' fullscreen show={show} onHide={handleClose}>
+      <Modal centered size="lg" fullscreen show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Chỉnh sửa</Modal.Title>
         </Modal.Header>

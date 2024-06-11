@@ -7,7 +7,19 @@ import useJWTDecode from './useJWTDecode';
 import useAxiosPrivate from './useAxiosPrivate';
 import useRefreshToken from './useRefreshToken';
 import useLogout from './useLogout';
+
+import useCartApiCalls from './useCartApiCalls';
+import useOrderApiCalls from './useOrderApiCalls';
+import useProductApiCalls from './useProductApiCalls';
+import useReportApiCalls from './useReportApiCalls';
+import useUserApiCalls from './useUserApiCalls';
+
 const hooks = {
+  useUserApiCalls,
+  useReportApiCalls,
+  useProductApiCalls,
+  useOrderApiCalls,
+  useCartApiCalls,
   useAuth,
   useInput,
   useLocalStorage,
@@ -16,7 +28,7 @@ const hooks = {
   useJWTDecode,
   useAxiosPrivate,
   useRefreshToken,
-  useLogout
+  useLogout,
 };
 
 export default hooks;

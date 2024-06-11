@@ -5,19 +5,19 @@ import Col from 'react-bootstrap/Col';
 import { toast } from 'react-toastify';
 import Pagination from 'react-bootstrap/Pagination';
 
-
-import ProductItem from '../../components/ProductItem';
-import productApiCalls from '../../networking/productApiCalls';
+import ProductItem from '~/components/ProductItem';
+import hooks from '~/hooks';
 
 const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [itemsPerPage] = useState(20);
   const [totalItems, setTotalItems] = useState(1);
+  const { getQuantity, getPage } = hooks.useProductApiCalls();
 
   useEffect(() => {
     const fetchQuantiy = async () => {
-      const data = await productApiCalls.getQuantity();
+      const data = await getQuantity();
       if (data.status === 200) {
         setTotalItems(data.result);
       } else {
@@ -34,17 +34,17 @@ const ProductList = () => {
       }
     };
     fetchQuantiy();
-  }, []);
+  }, [getQuantity]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await productApiCalls.getPage(currentPage, itemsPerPage);
+      const data = await getPage(currentPage, itemsPerPage);
       if (data.status === 200) {
         setProducts(data.result);
       }
     };
     fetchData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, getPage]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

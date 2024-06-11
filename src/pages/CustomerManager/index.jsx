@@ -4,24 +4,25 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CustomerItem from '../../components/CustomerItem';
-import userApiCalls from '~/networking/userApiCalls';
+import hooks from '~/hooks';
 
 const CustomerManager = () => {
   const [currentPage] = useState(1);
   const [customers, setCustomers] = useState([]);
-  const [itemsPerPage] = useState(20);
+  const [ itemsPerPage ] = useState( 20 );
+  const { getAll } = hooks.useUserApiCalls();
   const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await userApiCalls.getAll()
+      const data = await getAll();
       if (data.status === 200) {
         setCustomers(data.result);
       }
     };
 
     fetchData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, getAll]);
 
   const chunk = (arr, size) => {
     if (!arr || arr.length === 0) {

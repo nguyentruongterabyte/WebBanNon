@@ -12,6 +12,9 @@ import Register from '~/pages/Register';
 import CartProduct from '~/pages/CartProduct';
 import OrderManager from '~/pages/OrderManager';
 import Chart from '~/pages/Chart';
+import CustomerOrderList from '~/pages/CustomerOrderList';
+import OrderPlace from '~/pages/OrderPlace';
+import Error from '~/pages/Error';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -20,9 +23,16 @@ const publicRoutes = [
   { path: routes.login, component: Login, layout: layouts.LoginLayout },
   { path: routes.register, component: Register, layout: layouts.LoginLayout },
   { path: routes.home, component: Home },
+  { path: routes.unauthorized, component: Error, errorCode: 401, message: 'Unauthorized' },
 ];
 
 const privateRoutes = [
+  {
+    path: routes.orderPlace,
+    component: OrderPlace,
+    allowedRoles: [ROLES.user],
+    layout: layouts.HasSideBarLayout,
+  },
   {
     path: routes.homeHasLogged,
     component: Home,
@@ -33,6 +43,12 @@ const privateRoutes = [
     path: routes.chart,
     component: Chart,
     allowedRoles: [ROLES.admin],
+    layout: layouts.HasSideBarLayout,
+  },
+  {
+    path: routes.orderList,
+    component: CustomerOrderList,
+    allowedRoles: [ROLES.user],
     layout: layouts.HasSideBarLayout,
   },
   {

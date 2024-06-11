@@ -14,8 +14,9 @@ function useRefreshToken() {
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    });
+    }); 
     const accessToken = response?.data?.result;
+    console.log(accessToken);
     const role = response?.data?.role;
     setAuth((prev) => {
       // console.log(JSON.stringify(prev));

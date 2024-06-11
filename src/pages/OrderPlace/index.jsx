@@ -4,20 +4,23 @@ import classNames from 'classnames/bind';
 import styles from './Order.module.scss';
 import Utils from '~/utils/Utils';
 import hooks from '~/hooks';
-import userApiCalls from '~/networking/userApiCalls';
 import { toast } from 'react-toastify';
-import orderApiCalls from '~/networking/orderApiCalls';
-import cartApiCalls from '~/networking/cartApiCalls';
+import { useNavigate } from 'react-router-dom';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-const Order = () => {
+const OrderPlace = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const { user } = hooks.useJWTDecode();
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [address, setAddress] = useState('');
+  const { create } = hooks.useOrderApiCalls();
+  const { get } = hooks.useUserApiCalls();
+  const { deleteProduct } = hooks.useCartApiCalls();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem('selectedItems')) || [];
@@ -28,7 +31,7 @@ const Order = () => {
 
   useEffect(() => {
     const fetchUserInfo = async (userId) => {
-      const data = await userApiCalls.get(userId);
+      const data = await get(userId);
       if (data?.status === 200) {
         setEmail(data?.result?.email);
         setMobile(data?.result?.mobile);
@@ -36,7 +39,7 @@ const Order = () => {
     };
 
     fetchUserInfo(user);
-  }, [user]);
+  }, [user, get]);
 
   const handlePlaceOrder = async () => {
     if (!address.trim()) {
@@ -56,15 +59,21 @@ const Order = () => {
       chiTiet: JSON.stringify(orderItems),
     };
 
-    const data = await orderApiCalls.create(formData);
+    try {
+      const data = await create(formData);
+      console.log('Order API Response:', data);
 
-    if (data.status === 200) {
-      toast.success(data.message);
-      orderItems.forEach(async (orderItem) => {
-        await cartApiCalls.deleteProduct(user, orderItem.maSanPham);
-      });
-    } else {
-      toast.error(data.message);
+      if (data.status === 200) {
+        toast.success(data.message);
+        await Promise.all(orderItems.map((orderItem) => deleteProduct(user, orderItem.maSanPham)));
+        navigate(config.routes.orderList, { replace: true });
+        console.log('All items deleted from cart');
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+      toast.error('Có lỗi xảy ra khi đặt hàng!');
     }
   };
 
@@ -128,4 +137,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default OrderPlace;

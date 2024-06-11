@@ -27,6 +27,8 @@ export const api = {
     history: 'api/order/history',
     getAllOrder: 'api/order/history-all',
     updateStatus: 'api/order/update-status',
+    create: 'api/order/create',
+    cancelOrder: 'api/order/cancel'
   },
 
   cart: {
@@ -94,7 +96,7 @@ export const SIDEBAR_USER_MENU = [
     icon: icons.faHatCowboy,
   },
   {
-    path: routes.customerOrderList,
+    path: routes.orderList,
     name: 'Đơn mua',
     icon: icons.faTruckFast,
   },

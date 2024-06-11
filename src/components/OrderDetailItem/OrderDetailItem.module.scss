@@ -1,0 +1,13 @@
+.order__item-image {
+  margin-left: 20px;
+  object-fit: cover !important;
+}
+
+.order__item-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}

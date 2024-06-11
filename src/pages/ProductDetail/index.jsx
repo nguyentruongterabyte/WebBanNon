@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import productApiCalls from '../../networking/productApiCalls';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import hooks from '~/hooks';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
+  const { get } = hooks.useProductApiCalls();
   useEffect(() => {
     const fetchProduct = async () => {
-      const data = await productApiCalls.get(id);
+      const data = await get(id);
       if (data.status === 200) {
         setProduct(data.result);
       }
     };
     fetchProduct();
-  }, [id]); // Add id to dependency array
+  }, [id, get]); // Add id to dependency array
 
   if (!product) {
     return <div>Loading...</div>;

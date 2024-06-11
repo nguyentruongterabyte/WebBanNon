@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import cartApiCalls from '~/networking/cartApiCalls';
 import hooks from '~/hooks';
 
 import styles from './CartProduct.module.scss';
@@ -20,11 +19,12 @@ const CartProduct = () => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const { user } = hooks.useJWTDecode();
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
+  const { getCart, deleteProduct, updateCart } = hooks.useCartApiCalls();
 
   useEffect(() => {
     const fetchCart = async () => {
-      const data = await cartApiCalls.getCart(user);
+      const data = await getCart(user);
       if (data.status === 200) {
         setCartItems(data.result);
       } else {
@@ -33,10 +33,10 @@ const CartProduct = () => {
     };
 
     fetchCart();
-  }, [user]);
+  }, [getCart, user]);
 
   const handleDeleteItem = async (productId) => {
-    const data = await cartApiCalls.deleteProduct(user, productId);
+    const data = await deleteProduct(user, productId);
     if (data.status === 200) {
       setCartItems((prevItems) => prevItems.filter((item) => item.maSanPham !== productId));
       setSelectedItems((prevItems) => prevItems.filter((item) => item.maSanPham !== productId));
@@ -54,7 +54,7 @@ const CartProduct = () => {
       soLuong: quantity,
     };
 
-    const data = await cartApiCalls.updateCart(formData);
+    const data = await updateCart(formData);
     if (data.status === 200) {
       setCartItems((prevItems) =>
         prevItems.map((item) =>
@@ -123,7 +123,7 @@ const CartProduct = () => {
       toast.warn('Bạn vẫn chưa chọn sản phẩm nào để mua');
       return;
     }
-    navigate(config.routes.order);
+    navigate(config.routes.orderPlace);
   };
 
   return (

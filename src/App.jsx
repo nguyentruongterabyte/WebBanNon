@@ -6,47 +6,10 @@ import { DefaultLayout } from './layouts';
 import { Fragment } from 'react';
 import PersistLogin from './components/PersistLogin';
 import RequireAuth from './components/RequireAuth';
-import Error from './components/Error';
+import Error from './pages/Error';
 
 const App = () => {
-    const customerId = 24;
-
-
   return (
-    
-  
-  
-
-
-    // <div>
-    //   <Router>
-    //     <NavbarCustomer />
-    //     <Routes>
-    //       <Route path="/home" element={<Home />} />
-    //       <Route path="/product" element={<ProductManager />} />
-    //       <Route path="/customer" element={<CustomerManager />} />
-    //       <Route path="/order/history/:customerId" element={<OrderHistory />} />
-    //       <Route path="/product-list" element={<ProductList />} />
-    //       <Route path="/product/:id" element={ <ProductDetail /> } />
-    //       <Route path="/login" element={<Login/>} />
-    //     </Routes>
-    //   </Router>
-    //   <ToastContainer
-    //     position="top-right"
-    //     autoClose={5000}
-    //     hideProgressBar={false}
-    //     newestOnTop={false}
-    //     closeOnClick
-    //     rtl={false}
-    //     pauseOnFocusLoss
-    //     draggable
-    //     pauseOnHover
-    //     theme="light"
-    //   />
-    // </div>
-
-    
-
     <div className="app">
       <Router>
         <Routes>
@@ -66,7 +29,7 @@ const App = () => {
                 path={route.path}
                 element={
                   <Layout>
-                    <Page />
+                    {route.errorCode ? <Page errorCode={route.errorCode} message={route.message} /> : <Page />}
                   </Layout>
                 }
               />

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import reportApiCalls from '~/networking/reportApiCalls';
-import './Chart.css'; // Import file CSS
+import './Chart.css';
+import hooks from '~/hooks';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
-export const barOptions = {
+const barOptions = {
   responsive: true,
   plugins: {
     legend: {
@@ -19,7 +19,7 @@ export const barOptions = {
   },
 };
 
-export const pieOptions = {
+const pieOptions = {
   responsive: true,
   plugins: {
     legend: {
@@ -27,27 +27,28 @@ export const pieOptions = {
     },
     title: {
       display: true,
-      text: 'SỐ LƯỢNG SẢN PHẨM TỒN KHO',
+      text: 'SẢN PHẨM BÁN CHAY NHẤT',
     },
   },
 };
 
 const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  'Tháng 1',
+  'Tháng 2',
+  'Tháng 3',
+  'Tháng 4',
+  'Tháng 5',
+  'Tháng 6',
+  'Tháng 7',
+  'Tháng 8',
+  'Tháng 9',
+  'Tháng 10',
+  'Tháng 11',
+  'Tháng 12',
 ];
 
 export default function Chart() {
+  const { getRevenue, getMostProducts } = hooks.useReportApiCalls();
   const [revenue, setRevenue] = useState(labels.map(() => Math.random(100)));
   const [products, setProducts] = useState([]);
   const [year, setYear] = useState(2023);
@@ -65,7 +66,7 @@ export default function Chart() {
     labels: [],
     datasets: [
       {
-        label: 'Số lượng tồn kho',
+        label: 'Số lượng đã bán',
         data: [],
         backgroundColor: [],
       },
@@ -77,7 +78,7 @@ export default function Chart() {
   useEffect(() => {
     // Fetch revenue of 12 months
     const fetchRevenue = async () => {
-      const data = await reportApiCalls.getRevenue(year);
+      const data = await getRevenue(year);
 
       if (data.status === 200) {
         setRevenue(data.result.map((object) => Number(object.tong)));
@@ -86,7 +87,7 @@ export default function Chart() {
 
     // Fetch product inventory data
     const fetchProducts = async () => {
-      const data = await reportApiCalls.getMostProducts(year);
+      const data = await getMostProducts(year);
 
       if (data.status === 200) {
         setProducts(data.result);
@@ -95,7 +96,7 @@ export default function Chart() {
 
     fetchRevenue();
     fetchProducts();
-  }, [year]);
+  }, [year, getMostProducts, getRevenue]);
 
   useEffect(() => {
     setBarData({
@@ -124,7 +125,7 @@ export default function Chart() {
       labels: productLabels,
       datasets: [
         {
-          label: 'Số lượng tồn kho',
+          label: 'Số lượng đã bán',
           data: productData,
           backgroundColor: productColors,
         },

@@ -10,7 +10,10 @@ const routes = {
   register: '/register',
   cartList: '/cart-list',
   orderManager: '/order-manager',
-  chart: '/chart'
+  orderList: '/order-list',
+  chart: '/chart',
+  orderPlace: '/order-place',
+  unauthorized: '/unauthorized',
 };
 
 export default routes;

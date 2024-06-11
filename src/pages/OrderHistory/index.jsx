@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import orderApiCalls from '~/networking/orderApiCalls'; // Assuming orderApiCalls is correctly implemented
 import './OrderHistory.css'; // Import CSS file
+import hooks from '~/hooks';
 
 const OrderHistory = () => {
   const { customerId } = useParams();
   const [orders, setOrders] = useState([]);
-const [loading, setLoading] = useState(true);
+  const [ loading, setLoading ] = useState( true );
+  const { getOrderHistory } = hooks.useOrderApiCalls();
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const data = await orderApiCalls.getOrderHistory(customerId);
+      const data = await getOrderHistory(customerId);
       if (data.status === 200) {
         setOrders(data.result);
       }
@@ -19,7 +20,7 @@ const [loading, setLoading] = useState(true);
     };
 
     fetchOrders();
-  }, [customerId]);
+  }, [customerId, getOrderHistory]);
 
   return (
     <Container>

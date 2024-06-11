@@ -1,6 +1,5 @@
 import { useState, useEffect, useReducer, useRef, forwardRef, useImperativeHandle } from 'react';
 import Form from 'react-bootstrap/Form';
-import productApiCalls from '../../networking/productApiCalls';
 import PropTypes from 'prop-types';
 import productReducer, { initialState, ACTION_TYPE } from '../../reducer/productReducer';
 import Image from 'react-bootstrap/Image';
@@ -8,6 +7,7 @@ import images from '../../assets/images';
 import { Row, Col } from 'react-bootstrap';
 import './EditProduct.css';
 import { toast } from 'react-toastify';
+import hooks from '~/hooks';
 
 // eslint-disable-next-line react/display-name
 const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => {
@@ -17,12 +17,13 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
 
   const [product, setProduct] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
+  const { get, uploadImage, create, update } = hooks.useProductApiCalls();
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (maSanPham != -1 && !isCreate) {
       const fetchData = async () => {
-        const data = await productApiCalls.get(maSanPham);
+        const data = await get(maSanPham);
         if (data.status == 200) {
           setProduct(data.result);
         }
@@ -30,7 +31,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
 
       fetchData();
     }
-  }, [maSanPham, isCreate]);
+  }, [maSanPham, isCreate, get]);
 
   useEffect(() => {
     if (product) {
@@ -59,7 +60,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
     // Upload hình ảnh
     let hinhAnhURL = hinhAnh;
     if (selectedFile) {
-      const data2 = await productApiCalls.uploadImage(selectedFile, maSanPham);
+      const data2 = await uploadImage(selectedFile, maSanPham);
       if (data2.status == 200) {
         dispatch({ type: ACTION_TYPE.SET_HINH_ANH, payload: data2.name });
         hinhAnhURL = data2.result;
@@ -79,7 +80,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
       hinhAnh: hinhAnhURL,
     };
     if (isCreate) {
-      const response = await productApiCalls.create(formData);
+      const response = await create(formData);
 
       if (response.status == 200) {
         toast.success(response.message);
@@ -88,7 +89,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
         toast.error(response.message);
       }
     } else {
-      const response = await productApiCalls.update(formData);
+      const response = await update(formData);
       if (response.status == 200) {
         toast.success(response.message);
         window.location.reload();

@@ -1,0 +1,56 @@
+.order-item {
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.order-item h5 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 18px;
+}
+
+.order-item p {
+  margin: 4px 0;
+  font-size: 1.5rem;
+
+}
+
+.order-item span {
+  display: block;
+  font-weight: bold;
+}
+
+.status-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-status {
+  font-size: 1.6rem !important;
+  width: 300px !important;
+  max-width: 100% !important;
+}
+
+.btn-cancel {
+  font-size: 1.4rem !important;
+}
+
+.select-option-1 {
+  background-color: rgb(221, 137, 207) !important;
+}
+
+.select-option-2 {
+  background-color: rgb(240, 240, 124) !important;
+}
+
+.select-option-3 {
+  background-color: lightgreen !important;
+}
+
+.select-option-4 {
+  background-color: lightcoral !important;
+}

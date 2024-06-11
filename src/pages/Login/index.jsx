@@ -6,7 +6,6 @@ import config from '~/config';
 import hooks from '~/hooks';
 import Button from '~/components/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import userApiCalls from '~/networking/userApiCalls';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
 
@@ -24,6 +23,7 @@ const Login = () => {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [check, toggleCheck] = hooks.useToggle('persist', false);
+  const { login } = hooks.useUserApiCalls();
 
   const navigateAfterLogin = (from, navigate) => navigate(from, { replace: true });
 
@@ -41,7 +41,7 @@ const Login = () => {
       email: user,
       password: pwd,
     };
-    const data = await userApiCalls.login(formData);
+    const data = await login(formData);
     if (data?.status !== 200) {
       toast.error(data.message);
     }

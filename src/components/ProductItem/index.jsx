@@ -2,10 +2,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import productApiCalls from '~/networking/productApiCalls';
 import { toast } from 'react-toastify';
 import './ProductItem.css';
-import cartApiCalls from '~/networking/cartApiCalls';
 import hooks from '~/hooks';
 import Utils from '~/utils/Utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +12,8 @@ import icons from '~/assets/icons';
 export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   const navigate = useNavigate();
   const { user } = hooks.useJWTDecode();
+  const { createCart } = hooks.useCartApiCalls();
+  const { deleteProduct} = hooks.useProductApiCalls();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   };
 
   const handleConfirmDelete = async () => {
-    const data2 = await productApiCalls.delete(data.maSanPham);
+    const data2 = await deleteProduct(data.maSanPham);
     if (data2.status === 200) {
       toast.success(data2.message, {
         position: 'top-right',
@@ -76,7 +76,7 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
       userId: user,
       maSanPham: data.maSanPham,
     };
-    const d = await cartApiCalls.createCart(formData);
+    const d = await createCart(formData);
 
     if (d.status === 200) {
       toast.success(d.message);

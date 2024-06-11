@@ -1,38 +1,37 @@
 import { useState, useEffect } from 'react';
-import { Image, Tab, Table, Tabs } from 'react-bootstrap';
-import orderApiCalls from '~/networking/orderApiCalls';
+import { Tab, Tabs } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import classNames from 'classnames/bind';
 import styles from './OrderManager.module.scss';
-import Utils from '~/utils/Utils';
+import OrderItem from '~/components/OrderItem';
+import hooks from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 const OrderManager = () => {
   const [orders, setOrders] = useState([]);
-  
+  const { getAllOrder, updateStatus } = hooks.useOrderApiCalls();
   useEffect(() => {
-    const getAllOrder = async () => {
-      const data = await orderApiCalls.getAllOrder();
+    const fetchData = async () => {
+      const data = await getAllOrder();
       if (data?.status === 200) {
         setOrders(data.result);
       }
     };
-    getAllOrder();
-  }, []);
+    fetchData();
+  }, [getAllOrder]);
 
   const handleStatusChange = async (orderId, newStatus) => {
-    const confirmChange = window.confirm("Bạn có chắc chắn muốn thay đổi trạng thái?");
+    const confirmChange = window.confirm('Bạn có chắc chắn muốn thay đổi trạng thái?');
     if (confirmChange) {
       const formData = {
         maDonHang: orderId,
-        trangThai: newStatus
+        trangThai: newStatus,
       };
-      const data = await orderApiCalls.updateStatus(formData);
+      const data = await updateStatus(formData);
       if (data?.status === 200) {
-        const updatedOrders = await orderApiCalls.getAllOrder();
+        const updatedOrders = await getAllOrder();
         if (updatedOrders?.status === 200) {
-
           setOrders(updatedOrders.result);
           toast.success(data?.message);
         }
@@ -45,131 +44,27 @@ const OrderManager = () => {
 
   const renderOrder = (status = 'Tất cả') => {
     return orders.length > 0 ? (
-      <ul className={cx("order-list")}>
-        {status === 'Tất cả' ? orders.map((order) => (
-          <li key={order.maDonHang} className={cx("order-item")}>
-            <h5>ID đơn hàng: {order.maDonHang}</h5>
-            <p><span>Ngày đặt:</span> {order.ngayTao}</p>
-            <p><span>Khách hàng:</span> {order.username}</p>
-            <p><span>Địa chỉ:</span> {order.diaChi}</p>
-            <p><span>Số điện thoại:</span> {order.soDienThoai}</p>
-            <p><span>Tổng tiền:</span> {Utils.formatCurrency(Number(order.tongTien))}</p>
-            <p>
-              <span>Trạng thái: </span>
-              <select
-                value={order.trangThai}
-                className={cx(order.trangThai === 'Chờ xác nhận' ? "select-option-1" : 
-                  order.trangThai === 'Đang giao' ? "select-option-2":
-                  order.trangThai === 'Đã giao' ? "select-option-3" : "select-option-4"
-                )}
-                onChange={(e) => handleStatusChange(order.maDonHang, e.target.value)}
-              >
-                <option className={cx('select-option-1')} value="Chờ xác nhận">Chờ xác nhận</option>
-                <option className={cx('select-option-2')} value="Đang giao">Đang giao</option>
-                <option className={cx('select-option-3')} value="Đã giao">Đã giao</option>
-                <option className={cx('select-option-4')} value="Đã hủy">Đã hủy</option>
-              </select>
-            </p>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Sản phẩm</th>
-                  <th></th>
-                  <th>Số lượng</th>
-                  <th>Số tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                {order?.items?.map((item) => (<tr key={item.maSanPham}>
-                  <td>
-                    <Image width={100}
-                            height={50}
-                            className={cx('order_item-image')}
-                            rounded
-                            src={item.hinhAnh}
-                            alt={item.tenSanPham}/>
-                   
-                    </td>
-                  <td> <span className={cx('order__item-name')}>
-                      {item.tenSanPham}
-                      
-                    </span></td>
-                  <td>{item.soLuong}</td>
-                  <td>{Utils.formatCurrency(Number(item.giaSanPham))}</td>
-                </tr>))}
-               
-              </tbody>
-            </Table>
-          </li>
-        )) : orders.filter(order => order.trangThai === status).map((order) => (
-          <li key={order.maDonHang} className={cx("order-item")}>
-            <h5>ID đơn hàng: {order.maDonHang}</h5>
-            <p><span>Ngày đặt:</span> {order.ngayTao}</p>
-            <p><span>Số điện thoại:</span> {order.username}</p>
-            <p><span>Địa chỉ:</span> {order.diaChi}</p>
-            <p><span>Số điện thoại:</span> {order.soDienThoai}</p>
-            <p><span>Tổng tiền:</span> {Utils.formatCurrency(Number(order.tongTien))}</p>
-            <p>
-              <span>Status:</span>
-              <select
-                value={order.trangThai}
-                className={cx(order.trangThai === 'Chờ xác nhận' ? "select-option-1" : 
-                  order.trangThai === 'Đang giao' ? "select-option-2":
-                  order.trangThai === 'Đã giao' ? "select-option-3" : "select-option-4"
-                )}
-                onChange={(e) => handleStatusChange(order.maDonHang, e.target.value)}
-              >
-                <option className={cx('select-option-1')} value="Chờ xác nhận">Chờ xác nhận</option>
-                <option className={cx('select-option-2')} value="Đang giao">Đang giao</option>
-                <option className={cx('select-option-3')} value="Đã giao">Đã giao</option>
-                <option className={cx('select-option-4')} value="Đã hủy">Đã hủy</option>
-              </select>
-            </p>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Sản phẩm</th>
-                  <th></th>
-                  <th>Số lượng</th>
-                  <th>Số tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                {order?.items?.map((item) => (<tr key={item.maSanPham}>
-                  <td>
-                    <Image width={100}
-                            height={50}
-                            className={cx('order_item-image')}
-                            rounded
-                            src={item.hinhAnh}
-                            alt={item.tenSanPham}/>
-                   
-                    </td>
-                  <td> <span className={cx('order__item-name')}>
-                      {item.tenSanPham}
-                      
-                    </span></td>
-                  <td>{item.soLuong}</td>
-                  <td>{Utils.formatCurrency(Number(item.giaSanPham))}</td>
-                </tr>))}
-               
-              </tbody>
-            </Table>
-          </li>
-        ))}
+      <ul className={cx('order-list')}>
+        {status === 'Tất cả'
+          ? orders.map((order) => (
+              <OrderItem key={order.maDonHang} order={order} handleStatusChange={handleStatusChange} />
+            ))
+          : orders
+              .filter((order) => order.trangThai === status)
+              .map((order) => (
+                <OrderItem key={order.maDonHang} order={order} handleStatusChange={handleStatusChange} />
+              ))}
       </ul>
     ) : (
       <div>No orders available</div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
       <Tabs defaultActiveKey="tab1" id="uncontrolled-tab-example" className="mb-3">
         <Tab eventKey="tab1" title="Tất cả">
-          <div>
-            {renderOrder()}
-          </div>
+          <div>{renderOrder()}</div>
         </Tab>
         <Tab eventKey="tab2" title="Chờ xác nhận">
           <div>{renderOrder('Chờ xác nhận')}</div>
@@ -186,6 +81,6 @@ const OrderManager = () => {
       </Tabs>
     </div>
   );
-}
+};
 
 export default OrderManager;

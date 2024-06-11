@@ -13,7 +13,6 @@ function useAxiosPrivate() {
       (config) => {
         if (!config.headers['Authorization']) {
           config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
-          config.headers['ngrok-skip-browser-warning'] = true;
         }
         return config;
       },
@@ -29,7 +28,6 @@ function useAxiosPrivate() {
           const newAccessToken = await refresh();
           // Bearer
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-          prevRequest.headers['ngrok-skip-browser-warning'] = true;
           return axiosPrivate(prevRequest);
         }
         return Promise.reject(error);

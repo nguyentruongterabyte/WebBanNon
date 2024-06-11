@@ -9,7 +9,6 @@ import config from '~/config';
 import styles from '~/pages/Login/Login.module.scss';
 import Button from '~/components/Button';
 import hooks from '~/hooks';
-import userApiCalls from '~/networking/userApiCalls';
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +36,7 @@ function Register() {
 
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const { register } = hooks.useUserApiCalls();
 
   const from = config.routes.login;
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ function Register() {
       mobile,
     };
 
-    const data = await userApiCalls.register(formData);
+    const data = await register(formData);
     if (data.status === 200) {
       toast.success(data.message);
       setSuccess(true);
