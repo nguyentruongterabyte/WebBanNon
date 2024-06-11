@@ -103,7 +103,7 @@ const Login = () => {
         <br />
         <span className="line">
           {/*put router link here*/}
-          <Link to={config.routes.register}>Đăng kí</Link>
+          <Link to={config.routes.register}>Đăng kí</Link> | <Link to={config.routes.forgot}>Quên mật khẩu</Link>
         </span>
       </p>
     </section>

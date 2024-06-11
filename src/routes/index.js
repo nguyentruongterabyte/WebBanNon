@@ -15,6 +15,7 @@ import Chart from '~/pages/Chart';
 import CustomerOrderList from '~/pages/CustomerOrderList';
 import OrderPlace from '~/pages/OrderPlace';
 import Error from '~/pages/Error';
+import Forgot from '~/pages/Forgot';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -22,6 +23,7 @@ const routes = config.routes;
 const publicRoutes = [
   { path: routes.login, component: Login, layout: layouts.LoginLayout },
   { path: routes.register, component: Register, layout: layouts.LoginLayout },
+  { path: routes.forgot, component: Forgot, layout: layouts.LoginLayout },
   { path: routes.home, component: Home },
   { path: routes.unauthorized, component: Error, errorCode: 401, message: 'Unauthorized' },
 ];

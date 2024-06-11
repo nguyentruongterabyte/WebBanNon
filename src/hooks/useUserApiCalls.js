@@ -6,7 +6,22 @@ const useUserApiCalls = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const UserApiCalls = useMemo(
-    () => ({
+    () => ( {
+      
+      async forgot( email ) {
+        const urlEncodedData = `email=${ encodeURIComponent( email ) }`;
+        try {
+          const response = await axiosPrivate.post(api.user.resetPasswordRequest, urlEncodedData, {
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          });
+          return response?.data;
+        } catch (error) {
+          return { status: 500, message: error.message };
+        }
+      },
+
       // Đăng nhập
       async login(formData) {
         try {

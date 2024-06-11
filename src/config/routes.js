@@ -14,6 +14,7 @@ const routes = {
   chart: '/chart',
   orderPlace: '/order-place',
   unauthorized: '/unauthorized',
+  forgot: '/forgot'
 };
 
 export default routes;
