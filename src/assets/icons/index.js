@@ -23,10 +23,14 @@ import {
   faLocationCrosshairs,
   faCircle,
   faHatCowboy,
-  faCartArrowDown
+  faCartArrowDown,
+  faTruckFast,
+  faChartColumn,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = {
+  faChartColumn,
+  faTruckFast,
   faCartArrowDown,
   faHatCowboy,
   faCircle,

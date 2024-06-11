@@ -10,6 +10,7 @@ import ProductList from '~/pages/ProductList';
 import ProductDetail from '~/pages/ProductDetail';
 import Register from '~/pages/Register';
 import CartProduct from '~/pages/CartProduct';
+import OrderManager from '~/pages/OrderManager';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -25,6 +26,12 @@ const privateRoutes = [
     path: routes.homeHasLogged,
     component: Home,
     allowedRoles: [ROLES.admin, ROLES.user],
+    layout: layouts.HasSideBarLayout,
+  },
+  {
+    path: routes.orderManager,
+    component: OrderManager,
+    allowedRoles: [ROLES.admin],
     layout: layouts.HasSideBarLayout,
   },
   { path: routes.customer, component: CustomerManager, allowedRoles: [ROLES.admin], layout: layouts.HasSideBarLayout },
