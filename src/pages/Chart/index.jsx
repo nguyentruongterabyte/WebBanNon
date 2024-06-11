@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
 import reportApiCalls from '~/networking/reportApiCalls';
+import './Chart.css'; // Import file CSS
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
-export const options = {
+export const barOptions = {
   responsive: true,
   plugins: {
     legend: {
@@ -14,6 +15,19 @@ export const options = {
     title: {
       display: true,
       text: 'DOANH THU THEO NĂM',
+    },
+  },
+};
+
+export const pieOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'SỐ LƯỢNG SẢN PHẨM TỒN KHO',
     },
   },
 };
@@ -35,8 +49,9 @@ const labels = [
 
 export default function Chart() {
   const [revenue, setRevenue] = useState(labels.map(() => Math.random(100)));
+  const [products, setProducts] = useState([]);
   const [year, setYear] = useState(2023);
-  const [data, setData] = useState({
+  const [barData, setBarData] = useState({
     labels,
     datasets: [
       {
@@ -46,26 +61,44 @@ export default function Chart() {
       },
     ],
   });
-
-  // console.log( revenue );
+  const [pieData, setPieData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'Số lượng tồn kho',
+        data: [],
+        backgroundColor: [],
+      },
+    ],
+  });
 
   const date = new Date();
 
   useEffect(() => {
-    // fetch revenue of 12 month
-    const fetchData = async () => {
+    // Fetch revenue of 12 months
+    const fetchRevenue = async () => {
       const data = await reportApiCalls.getRevenue(year);
 
-      console.log(data);
       if (data.status === 200) {
         setRevenue(data.result.map((object) => Number(object.tong)));
       }
     };
-    fetchData();
+
+    // Fetch product inventory data
+    const fetchProducts = async () => {
+      const data = await reportApiCalls.getMostProducts(year);
+
+      if (data.status === 200) {
+        setProducts(data.result);
+      }
+    };
+
+    fetchRevenue();
+    fetchProducts();
   }, [year]);
 
   useEffect(() => {
-    setData({
+    setBarData({
       labels,
       datasets: [
         {
@@ -76,6 +109,28 @@ export default function Chart() {
       ],
     });
   }, [revenue]);
+
+  useEffect(() => {
+    const productLabels = products.map((product) => product.tenSanPham);
+    const productData = products.map((product) => Number(product.tongSoLuong));
+    const productColors = products.map(
+      () =>
+        `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(
+          Math.random() * 255,
+        )}, 0.5)`,
+    );
+
+    setPieData({
+      labels: productLabels,
+      datasets: [
+        {
+          label: 'Số lượng tồn kho',
+          data: productData,
+          backgroundColor: productColors,
+        },
+      ],
+    });
+  }, [products]);
 
   const renderYears = () => {
     const render = [];
@@ -95,7 +150,10 @@ export default function Chart() {
       <select value={year} onChange={(e) => setYear(Number(e.target.value))}>
         {renderYears()}
       </select>
-      <Bar options={options} data={data} />
+      <Bar options={barOptions} data={barData} />
+      <div className="small-pie-container">
+        <Pie options={pieOptions} data={pieData} />
+      </div>
     </div>
   );
 }
