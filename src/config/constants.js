@@ -20,20 +20,20 @@ export const api = {
     resetPasswordRequest: 'api/user/reset-password-request',
     refreshToken: 'api/user/refresh-token',
     getAll: 'api/user/get-all',
+    get: 'api/user/get',
   },
 
   order: {
     history: 'api/order/history',
+    create: 'api/order/create',
   },
 
-  cart:{
+  cart: {
     create: 'api/cart/create',
     list: 'api/cart/list',
     deleteProduct: 'api/cart/delete-product',
     updateProduct: 'api/cart/update-product',
-
   },
-
 };
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -68,16 +68,21 @@ export const SIDEBAR_USER_MENU = [
     name: 'Trang chủ',
     icon: icons.faHome,
   },
-  { 
+  {
     path: routes.cartList,
     name: 'Giỏ hàng',
-    icon: icons.faCartArrowDown
+    icon: icons.faCartArrowDown,
   },
   {
     path: routes.productList,
     name: 'Sản phẩm',
-    icon: icons.faHatCowboy
-  }
+    icon: icons.faHatCowboy,
+  },
+  {
+    path: routes.customerOrderList,
+    name: 'Đơn mua',
+    icon: icons.faTruckFast,
+  },
 ];
 
 // Account menu items

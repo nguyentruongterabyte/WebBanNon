@@ -1,0 +1,40 @@
+.order-wrapper {
+  padding: 20px;
+  background-color: #fff;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.total-section {
+  display: flex;
+  flex-direction: column;
+  .total {
+
+    align-self: self-end;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-right:36px;
+    p {
+      font-size: 1.6rem;
+    }
+  }
+  
+  .btn-place-order {
+    
+    margin-top: 20px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .address, .mobile, .email {
+    font-size: 1.6rem !important;
+  }
+}
+

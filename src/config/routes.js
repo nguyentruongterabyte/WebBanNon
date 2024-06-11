@@ -8,7 +8,9 @@ const routes = {
   productDetail: '/product/:id',
   productManager: '/product',
   register: '/register',
-  cartList: '/cart-list'
+  cartList: '/cart-list',
+  order: '/order',
+  customerOrderList: '/customer-order-list'
 };
 
 export default routes;

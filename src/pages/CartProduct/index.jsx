@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Table, Image, Button } from 'react-bootstrap';
 import classNames from 'classnames/bind';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import cartApiCalls from '~/networking/cartApiCalls';
-import { toast } from 'react-toastify';
 import hooks from '~/hooks';
 
 import styles from './CartProduct.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import icons from '~/assets/icons';
 import Utils from '~/utils/Utils';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +20,7 @@ const CartProduct = () => {
   const [cartItems, setCartItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const { user } = hooks.useJWTDecode();
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -114,6 +118,14 @@ const CartProduct = () => {
     );
   }, [cartItems]);
 
+  const handleOrderClick = () => {
+    if (selectedItems.length === 0) {
+      toast.warn('Bạn vẫn chưa chọn sản phẩm nào để mua');
+      return;
+    }
+    navigate(config.routes.order);
+  };
+
   return (
     <div className={cx('wrapper')}>
       <Table>
@@ -200,7 +212,9 @@ const CartProduct = () => {
             </span>
           </div>
         </div>
-        <Button className={cx('btn-order')}>Mua hàng</Button>
+        <Button className={cx('btn-order')} onClick={handleOrderClick}>
+          Mua hàng
+        </Button>
       </section>
     </div>
   );

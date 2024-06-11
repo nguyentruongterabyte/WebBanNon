@@ -27,7 +27,7 @@ const cartApiCalls = {
       urlEncodedData.append('maSanPham', productId);
       urlEncodedData.append('userId', userId);
 
-      console.log(urlEncodedData);
+      // console.log(urlEncodedData);
       const response = await axios.delete(api.cart.deleteProduct, {
         data: urlEncodedData,
         headers: {

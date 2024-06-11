@@ -29,6 +29,16 @@ const userApiCalls = {
     }
   },
 
+  // Lấy thông tin customer
+  async get( userId ) {
+    try {
+      const response = await axios.get(api.user.get + `?userId=${userId}`);
+      return response?.data;
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
+  },
+
   // Đăng ký
   async register(formData) {
     try {

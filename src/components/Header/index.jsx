@@ -66,7 +66,7 @@ function Header({ className, headerSearch }) {
               to={auth.accessToken ? config.routes.homeHasLoggedIn : config.routes.home}
               className={cx('logo-link')}
             >
-              <FontAwesomeIcon className={cx('logo')} icon={icons.faSquareParking} />
+              <FontAwesomeIcon className={cx('logo')} icon={icons.faHatCowboy} />
             </Link>
             <span className={cx('hide-on-mobile')}>Hat Shop</span>
           </Navbar.Brand>
