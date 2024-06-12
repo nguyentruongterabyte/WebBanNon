@@ -9,14 +9,14 @@ import hooks from '~/hooks';
 
 const cx = classNames.bind(styles);
 
-const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
+const OrderItem = ({ data, handleStatusChange, isUser = false }) => {
   
   const { cancelOrder } = hooks.useOrderApiCalls();
   
   const handleCancelOrder = async () => {
     const confirmChange = window.confirm('Bạn có chắc chắn muốn hủy đơn hàng?');
     if (confirmChange) {
-      const data = await cancelOrder(order.maDonHang);
+      const data = await cancelOrder(data.maDonHang);
       if (data.status === 200) {
         toast.success(data.message);
         window.location.reload();
@@ -28,41 +28,41 @@ const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
 
   return (
     <li className={cx('order-item')}>
-      <h5>ID đơn hàng: {order.maDonHang}</h5>
+      <h5>ID đơn hàng: {data.maDonHang}</h5>
       <p>
-        <span>Ngày đặt:</span> {order.ngayTao}
+        <span>Ngày đặt:</span> {data.ngayTao}
       </p>
       <p>
-        <span>Khách hàng:</span> {order.username}
+        <span>Khách hàng:</span> {data.username}
       </p>
       <p>
-        <span>Địa chỉ:</span> {order.diaChi}
+        <span>Địa chỉ:</span> {data.diaChi}
       </p>
       <p>
-        <span>Số điện thoại:</span> {order.soDienThoai}
+        <span>Số điện thoại:</span> {data.soDienThoai}
       </p>
       <p>
-        <span>Tổng tiền:</span> {Utils.formatCurrency(Number(order.tongTien))}
+        <span>Tổng tiền:</span> {Utils.formatCurrency(Number(data.tongTien))}
       </p>
-      <p>
+      <div>
         <span>Trạng thái: </span>
         {isUser ? (
           <FormGroup className={cx('status-section')}>
             <Form.Control
               className={cx(
-                order.trangThai === 'Chờ xác nhận'
+                data.trangThai === 'Chờ xác nhận'
                   ? 'select-option-1'
-                  : order.trangThai === 'Đang giao'
+                  : data.trangThai === 'Đang giao'
                   ? 'select-option-2'
-                  : order.trangThai === 'Đã giao'
+                  : data.trangThai === 'Đã giao'
                   ? 'select-option-3'
                   : 'select-option-4',
                 'order-status',
               )}
               disabled
-              value={order.trangThai}
+              value={data.trangThai}
             />
-            {order.trangThai === 'Chờ xác nhận' ? (
+            {data.trangThai === 'Chờ xác nhận' ? (
               <Button variant="outline-warning" className={cx('btn-cancel')} onClick={handleCancelOrder}>
                 Hủy đơn hàng
               </Button>
@@ -72,17 +72,17 @@ const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
           </FormGroup>
         ) : (
           <select
-            value={order.trangThai}
+            value={data.trangThai}
             className={cx(
-              order.trangThai === 'Chờ xác nhận'
+              data.trangThai === 'Chờ xác nhận'
                 ? 'select-option-1'
-                : order.trangThai === 'Đang giao'
+                : data.trangThai === 'Đang giao'
                 ? 'select-option-2'
-                : order.trangThai === 'Đã giao'
+                : data.trangThai === 'Đã giao'
                 ? 'select-option-3'
                 : 'select-option-4',
             )}
-            onChange={(e) => handleStatusChange(order.maDonHang, e.target.value)}
+            onChange={(e) => handleStatusChange(data.maDonHang, e.target.value)}
           >
             <option className={cx('select-option-1')} value="Chờ xác nhận">
               Chờ xác nhận
@@ -98,7 +98,7 @@ const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
             </option>
           </select>
         )}
-      </p>
+      </div>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -109,7 +109,7 @@ const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
           </tr>
         </thead>
         <tbody>
-          {order?.items?.map((item) => (
+          {data?.items?.map((item) => (
             <OrderDetailItem key={item.maSanPham} item={item} />
           ))}
         </tbody>
@@ -119,7 +119,7 @@ const OrderItem = ({ order, handleStatusChange, isUser = false }) => {
 };
 
 OrderItem.propTypes = {
-  order: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
   handleStatusChange: PropTypes.func,
   isUser: PropTypes.bool,
 };

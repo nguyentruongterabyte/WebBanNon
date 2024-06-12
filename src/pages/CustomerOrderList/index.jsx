@@ -26,13 +26,13 @@ const CustomerOrderList = () => {
     return orders.length > 0 ? (
       <ul className={cx('order-list')}>
         {status === 'Tất cả'
-          ? orders.map((order) => <OrderItem key={order.maDonHang} order={order} isUser />)
+          ? orders.map((order) => <OrderItem key={order.maDonHang} data={order} isUser />)
           : orders
               .filter((order) => order.trangThai === status)
-              .map((order) => <OrderItem key={order.maDonHang} order={order} isUser />)}
+              .map((order) => <OrderItem key={order.maDonHang} data={order} isUser />)}
       </ul>
     ) : (
-      <div>No orders available</div>
+      <div>Không có đơn hàng nào</div>
     );
   };
   return (

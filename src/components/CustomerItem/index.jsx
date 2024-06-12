@@ -1,20 +1,19 @@
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 const CustomerItem = ({ data, onClickDetails }) => {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{data.username}</Card.Title>
-        <Card.Text>
-          Email: {data.email}
-          <br />
-          Mobile: {data.mobile}
-        </Card.Text>
-        <Button variant="primary" onClick={() => onClickDetails(data.id)}>Details</Button>
-      </Card.Body>
-    </Card>
+    <tr>
+      <td>{data.id}</td>
+      <td>{data.username}</td>
+      <td>{data.email}</td>
+      <td>{data.mobile}</td>
+      <td>
+        <Button variant="primary" onClick={() => onClickDetails(data.id)}>
+          Details
+        </Button>
+      </td>
+    </tr>
   );
 };
 

@@ -47,16 +47,16 @@ const OrderManager = () => {
       <ul className={cx('order-list')}>
         {status === 'Tất cả'
           ? orders.map((order) => (
-              <OrderItem key={order.maDonHang} order={order} handleStatusChange={handleStatusChange} />
+              <OrderItem key={order.maDonHang} data={order} handleStatusChange={handleStatusChange} />
             ))
           : orders
               .filter((order) => order.trangThai === status)
               .map((order) => (
-                <OrderItem key={order.maDonHang} order={order} handleStatusChange={handleStatusChange} />
+                <OrderItem key={order.maDonHang} data={order} handleStatusChange={handleStatusChange} />
               ))}
       </ul>
     ) : (
-      <div>No orders available</div>
+      <div>Không có đơn hàng nào</div>
     );
   };
 
