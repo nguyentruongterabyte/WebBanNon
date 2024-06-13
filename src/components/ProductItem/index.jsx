@@ -13,7 +13,7 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   const navigate = useNavigate();
   const { user } = hooks.useJWTDecode();
   const { createCart } = hooks.useCartApiCalls();
-  const { deleteProduct} = hooks.useProductApiCalls();
+  const { deleteProduct } = hooks.useProductApiCalls();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -36,31 +36,16 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
   };
 
   const handleConfirmDelete = async () => {
-    const data2 = await deleteProduct(data.maSanPham);
-    if (data2.status === 200) {
-      toast.success(data2.message, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
+    await toast
+      .promise(deleteProduct(data.maSanPham), {
+        pending: 'Đang thực hiện xóa sản phẩm',
+      })
+      .then((d) => {
+        if (d.status === 200) {
+          toast.success(d.message);
+          window.location.reload();
+        } else toast.error(d.message);
       });
-      window.location.reload();
-    } else {
-      toast.error(`${data2.status} ${data2.message}`, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
-    }
   };
 
   // add cart
@@ -93,14 +78,14 @@ export const ProductItem = ({ data, isUser = false, onClickButtonEdit }) => {
         </Card.Text>
 
         {!isUser && (
-          <>
+          <div className="product-item__manager-section">
             <Button variant="primary" onClick={handleEditClick}>
               Chỉnh sửa
             </Button>
-            <Button variant="danger" onClick={handleDeleteClick}>
+            <Button className="product-item__btn-delete" variant="danger" onClick={handleDeleteClick}>
               Xóa
             </Button>
-          </>
+          </div>
         )}
 
         {isUser && (

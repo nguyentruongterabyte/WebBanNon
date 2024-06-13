@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -141,7 +141,7 @@ const ProductManager = () => {
           <Modal.Title>Chỉnh sửa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {show && maSanPham ? <EditProduct ref={editProductRef} maSanPham={maSanPham} /> : <></>}
+          {show && maSanPham ? <EditProduct ref={editProductRef} maSanPham={maSanPham} /> : <Fragment />}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -152,11 +152,11 @@ const ProductManager = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showAdd} onHide={handleCloseAdd}>
+      <Modal centered size="lg" fullscreen show={showAdd} onHide={handleCloseAdd}>
         <Modal.Header closeButton>
           <Modal.Title>Chỉnh sửa</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{showAdd ? <EditProduct ref={editProductRef} isCreate={true} /> : <></>}</Modal.Body>
+        <Modal.Body>{showAdd ? <EditProduct ref={editProductRef} isCreate={true} /> : <Fragment />}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAdd}>
             Đóng

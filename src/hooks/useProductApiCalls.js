@@ -38,6 +38,17 @@ const useProductApiCalls = () => {
         }
       },
 
+      // Tìm kiếm sản phẩm
+      async search(key) {
+        try {
+          const params = `?key=${key}`;
+          const response = await axiosPrivate.get(api.product.search + params);
+          return response?.data;
+        } catch (error) {
+          return { status: 500, messaage: error.message };
+        }
+      },
+
       // Chỉnh sửa sản phẩm
       async update(formData) {
         try {

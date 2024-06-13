@@ -30,7 +30,7 @@ function Header({ className, headerSearch }) {
   const ROLES = config.constants.ROLES;
   const { role } = hooks.useJWTDecode();
 
-  const Search = headerSearch || undefined;
+  const Search = headerSearch;
 
   const classes = cx('header-wrapper', { [className]: className });
 
@@ -80,7 +80,7 @@ function Header({ className, headerSearch }) {
             ) : (
               <></>
             )}
-            <Nav className={cx('navbar-nav')}>
+            <Nav>
               {auth.accessToken ? (
                 <>
                   {menuItems.map((item, index) => (

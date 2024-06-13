@@ -16,6 +16,7 @@ import CustomerOrderList from '~/pages/CustomerOrderList';
 import OrderPlace from '~/pages/OrderPlace';
 import Error from '~/pages/Error';
 import Forgot from '~/pages/Forgot';
+import SearchBar from '~/components/SearchBar';
 
 const ROLES = config.constants.ROLES;
 const routes = config.routes;
@@ -71,13 +72,21 @@ const privateRoutes = [
     component: ProductManager,
     allowedRoles: [ROLES.admin],
     layout: layouts.HasSideBarLayout,
+    headerSearch: SearchBar,
   },
-  { path: routes.productList, component: ProductList, allowedRoles: [ROLES.user], layout: layouts.HasSideBarLayout },
+  {
+    path: routes.productList,
+    component: ProductList,
+    allowedRoles: [ROLES.user],
+    layout: layouts.HasSideBarLayout,
+    headerSearch: SearchBar ,
+  },
   {
     path: routes.productDetail,
     component: ProductDetail,
     allowedRoles: [ROLES.admin, ROLES.user],
     layout: layouts.HasSideBarLayout,
+    headerSearch: SearchBar
   },
   { path: routes.cartList, component: CartProduct, allowedRoles: [ROLES.user], layout: layouts.HasSideBarLayout },
 ];

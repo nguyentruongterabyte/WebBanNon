@@ -1,9 +1,11 @@
-# React + Vite
+# Run docker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+docker build -t hatshopweb .
 
-Currently, two official plugins are available:
+![Run docker](RunDocker.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# WebBanNon
+Open docker desktop
+Select Images tab
+![Run Container](RunContainer.png)
+Then config, container (I used port 5173) -> Press "Run"
+![Config container](ConfigContainer.png)

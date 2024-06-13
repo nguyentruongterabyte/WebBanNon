@@ -43,6 +43,10 @@ export const api = {
   },
 };
 
+// Default image url
+export const DEFAULT_IMAGE_TEMPLATE_URL = import.meta.env.VITE_DEFAULT_IMAGE_TEMPLATE_URL ?? 'https://picsum.photos/200/300';
+
+// Base url
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 // Roles
 export const ROLES = {

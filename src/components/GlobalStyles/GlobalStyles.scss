@@ -83,13 +83,18 @@ input[type="email"],
 input[type="tel"],
 input[type="number"],
 option,
-button,
+select,
 textarea {
-  // font-size: 1.8rem;
+  font-size: 1.7rem !important;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
+button {
+  font-size: 1.4rem !important;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
 a[href] {
   // color: var(--text-color);
   text-decoration: none;

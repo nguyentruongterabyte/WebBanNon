@@ -53,7 +53,7 @@ const App = () => {
                   <Route
                     path={route.path}
                     element={
-                      <Layout>
+                      <Layout headerSearch={route.headerSearch}>
                         <Page />
                       </Layout>
                     }

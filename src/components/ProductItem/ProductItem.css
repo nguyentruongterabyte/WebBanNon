@@ -4,12 +4,12 @@
 
 .product-item__img {
   width: 100%;
-  height: 200px;
+  height: 300px !important;
   object-fit: cover;
 }
 
 .product-item__name {
-  font-size: 1.4rem !important;
+  font-size: 1.6rem !important;
   line-height: 1.6rem !important;
   max-height: 3.2rem;
   min-height: 3.2rem;
@@ -17,4 +17,19 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.product-item__describe {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.product-item__manager-section {
+  float: right;
+}
+
+.product-item__btn-delete {
+  margin-left: 20px;
 }

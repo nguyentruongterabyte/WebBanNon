@@ -87,17 +87,20 @@ const ProductList = () => {
     }, []);
   };
 
+  const renderProducts = () =>
+    chunk(products, 4).map((rowProducts, index) => (
+      <Row key={index}>
+        {rowProducts.map((product) => (
+          <Col key={product.maSanPham} sm={6} md={4} lg={3}>
+            <ProductItem isUser={true} data={product} />
+          </Col>
+        ))}
+      </Row>
+    ));
+
   return (
     <Container>
-      {chunk(products, 4).map((rowProducts, index) => (
-        <Row key={index}>
-          {rowProducts.map((product) => (
-            <Col key={product.maSanPham} sm={6} md={4} lg={3}>
-              <ProductItem isUser={true} data={product} />
-            </Col>
-          ))}
-        </Row>
-      ))}
+      {renderProducts()}
       <Pagination className="justify-content-center mt-3">
         <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
         <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />

@@ -6,6 +6,7 @@ export const initialState = {
   mauSac: '',
   hinhAnh: '',
   trangThai: '',
+  moTa: '',
 };
 
 export const ACTION_TYPE = {
@@ -16,6 +17,7 @@ export const ACTION_TYPE = {
   SET_MAU_SAC: 'SET_MAU_SAC',
   SET_HINH_ANH: 'SET_HINH_ANH',
   SET_TRANG_THAI: 'SET_TRANG_THAI',
+  SET_MO_TA: 'SET_MO_TA',
 };
 
 const productReducer = (state, action) => {
@@ -34,6 +36,8 @@ const productReducer = (state, action) => {
       return { ...state, hinhAnh: action.payload };
     case ACTION_TYPE.SET_TRANG_THAI:
       return { ...state, trangThai: action.payload };
+    case ACTION_TYPE.SET_MO_TA:
+      return { ...state, moTa: action.payload };
     default:
       return state;
   }

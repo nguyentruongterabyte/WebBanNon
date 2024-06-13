@@ -1,5 +1,14 @@
 .product-item__img {
   width: 50%; 
-  height: 100px; /* Thay đổi chiều cao này thành giá trị mong muốn */
+  height: 100px;
   object-fit: cover;
+}
+
+.cart__btn-add {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  height: 80px !important;
+  width: 160px !important;
+  font-size: 3rem !important;
 }

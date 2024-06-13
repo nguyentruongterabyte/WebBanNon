@@ -8,12 +8,13 @@ import { Row, Col } from 'react-bootstrap';
 import './EditProduct.css';
 import { toast } from 'react-toastify';
 import hooks from '~/hooks';
+import config from '~/config';
 
 // eslint-disable-next-line react/display-name
 const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
 
-  const { tenSanPham, giaSanPham, soLuong, gioiTinh, mauSac, hinhAnh } = state;
+  const { tenSanPham, giaSanPham, soLuong, gioiTinh, mauSac, hinhAnh, moTa } = state;
 
   const [product, setProduct] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
@@ -42,6 +43,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
       dispatch({ type: ACTION_TYPE.SET_SO_LUONG, payload: product.soLuong });
       dispatch({ type: ACTION_TYPE.SET_TRANG_THAI, payload: product.trangThai });
       dispatch({ type: ACTION_TYPE.SET_GIOI_TINH, payload: product.gioiTinh });
+      dispatch({ type: ACTION_TYPE.SET_MO_TA, payload: product.moTa });
     }
   }, [product]);
 
@@ -56,17 +58,24 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
     }
   };
 
+  const getDownloadURL = async (selectedFile, productId) => {
+    const data = await uploadImage(selectedFile, productId);
+
+    if (data.status === 200) {
+      return data.result;
+    } else {
+      return null;
+    }
+  };
+
   const saveChanges = async () => {
     // Upload hình ảnh
     let hinhAnhURL = hinhAnh;
     if (selectedFile) {
-      const data2 = await uploadImage(selectedFile, maSanPham);
-      if (data2.status == 200) {
-        dispatch({ type: ACTION_TYPE.SET_HINH_ANH, payload: data2.name });
-        hinhAnhURL = data2.result;
-      } else {
-        // code
-      }
+      hinhAnhURL = await toast.promise(getDownloadURL(selectedFile, maSanPham), {
+        pending: 'Đang tải hình ảnh sản phẩm lên',
+      });
+      dispatch({ type: ACTION_TYPE.SET_HINH_ANH, payload: hinhAnhURL ?? config.constants.DEFAULT_IMAGE_TEMPLATE_URL });
     }
 
     // update sản phẩm
@@ -78,6 +87,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
       gioiTinh: gioiTinh,
       mauSac: mauSac,
       hinhAnh: hinhAnhURL,
+      moTa: moTa,
     };
     if (isCreate) {
       const response = await create(formData);
@@ -112,6 +122,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
           onChange={(e) => dispatch({ type: ACTION_TYPE.SET_TEN, payload: e.target.value })}
           type="text"
           placeholder="Mũ lưỡi trai"
+          required
           autoFocus
         />
       </Form.Group>
@@ -127,6 +138,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
       <Form.Group>
         <Form.Label>Số lượng</Form.Label>
         <Form.Control
+          required
           value={soLuong ?? ''}
           type="number"
           placeholder="5"
@@ -136,6 +148,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
       <Form.Group>
         <Form.Label>Màu sắc</Form.Label>
         <Form.Control
+          required
           value={mauSac ?? ''}
           type="text"
           placeholder="Nâu sẫm"
@@ -159,6 +172,7 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
           <Row>
             <Col sm="10">
               <Form.Control
+                required
                 value={hinhAnh ?? ''}
                 readOnly
                 onChange={(e) => dispatch({ type: ACTION_TYPE.SET_HINH_ANH, payload: e.target.value })}
@@ -178,6 +192,15 @@ const EditProduct = forwardRef(({ maSanPham = '-1', isCreate = false }, ref) => 
             </Col>
           </Row>
         </Col>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Mô tả sản phẩm</Form.Label>
+        <Form.Control
+          value={moTa}
+          onChange={(e) => dispatch({ type: ACTION_TYPE.SET_MO_TA, payload: e.target.value })}
+          as="textarea"
+          rows={5}
+        />
       </Form.Group>
     </Form>
   );

@@ -21,7 +21,7 @@ function HasSideBarLayout({ children, headerSearch }) {
 
 HasSideBarLayout.propTypes = {
   children: PropTypes.node.isRequired,
-  headerSearch: PropTypes.node,
+  headerSearch: PropTypes.any,
 };
 
 export default HasSideBarLayout;
